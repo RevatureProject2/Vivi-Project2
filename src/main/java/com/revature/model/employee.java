@@ -1,7 +1,7 @@
 package com.revature.model;
 
 public class employee {
-	private String username;
+	private static String username;
 	private String firstname;
 	private String lastname;
 	private String password;
@@ -11,7 +11,13 @@ public class employee {
 	private int login;
 	private int balance;
 	
-	
+	public employee() {
+		this.username = "";
+		this.password = "";
+		this.firstname = "";
+		this.lastname = "";
+		this.email = "";
+	}
 	public employee(String username, String password, int admin, int login) {
 		super();
 		this.username = username;
@@ -36,7 +42,7 @@ public class employee {
 		this.password = password;
 	}
 
-	public String getUsername() {
+	public static String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {

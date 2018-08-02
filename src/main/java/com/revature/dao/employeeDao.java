@@ -6,10 +6,12 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import com.revature.jdbcConnection.jdbcConnection;
 import com.revature.model.employee;
+import com.revature.util.logUtil;
 
 
 public class employeeDao implements ERS_DAO {
@@ -23,23 +25,21 @@ public class employeeDao implements ERS_DAO {
 		}
 		return employeeDao;
 	}
-	
+
 	@Override
 	public employee login(employee emp) {
 		InputStream in = null;
 		if(emp.isAdmin() == 1)
 		{
-			Properties props = new Properties();
-		
+			Properties props = new Properties();		
 			try {
 			in = new FileInputStream("src/main/resources/connections.properties");
 			props.load(in);
-
 			} catch (IOException e1) {
+				
 			e1.printStackTrace();
 			}
 
-		
 			String username_input =props.getProperty("superUsername");
 			String pw_input = props.getProperty("superPassword");
 		
@@ -75,9 +75,7 @@ public class employeeDao implements ERS_DAO {
 			try {
 				String sql = "Select password from metadata where username= ?";
 				PreparedStatement ps = conn.prepareStatement(sql);
-		
 				ps.setString(1, emp.getUsername());
-				
 				ResultSet rs = ps.executeQuery();
 							
 				String pw = new String();
@@ -113,5 +111,28 @@ public class employeeDao implements ERS_DAO {
 		}
 		return null;	
 		}
+
+
+	@Override
+	public employee select(String username) {
+		try(Connection connection = jdbcConnection.getConnection()) {
+			int statementIndex = 0;
+			String command = "SELECT * FROM METADATA WHERE USERNAME = ?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setString(++statementIndex, employee.getUsername());
+			ResultSet result = statement.executeQuery();
+
+			while(result.next()) {
+				
+				return new employee(
+						result.getString("username"),
+						result.getString("")
+						);
+			}
+		} catch (SQLException e) {
+			logUtil.log.warn("Exception selecting a customer", e);
+		}
+		return new employee();
+	}
 
 }
