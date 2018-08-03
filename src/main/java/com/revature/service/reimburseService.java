@@ -2,6 +2,7 @@ package com.revature.service;
 
 import com.revature.dao.employeeDao;
 import com.revature.model.employee;
+import com.revature.model.request;
 
 public class reimburseService {
 
@@ -23,6 +24,11 @@ public class reimburseService {
 		
 		return new employee();
 	}
+	public request submit(request req) {
+		
+		return null;
+	}
+	
 	
 	
 	

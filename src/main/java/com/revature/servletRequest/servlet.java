@@ -13,7 +13,7 @@ public class servlet extends DefaultServlet {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getRequestURI());
+//		System.out.println(request.getRequestURI());
 		if (request.getRequestURI().substring(request.getContextPath().length()).startsWith("/static/"))
 			super.doGet(request, response);
 		else

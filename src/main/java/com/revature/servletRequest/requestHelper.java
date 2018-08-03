@@ -22,6 +22,10 @@ public class requestHelper {
 		case "home":
 			homeController.home(req);
 			break;
+		case "logout":
+			loginController.logout(req, res);
+			break;
+			
 		default:
 		//	return "404.jsp";
 

@@ -30,14 +30,30 @@
           <li><a href="#">Update account</a></li>
         </ul>
       </li>
-      <li><a href="#">Logout</a></li>
+      <li id="logout" onclick="out()"><a href="#">Logout</a></li>
     </ul>
   </div>
 </nav>
   
 <div class="container">
-  <h3>Wecome to Employee Reimbursement Service </h3>
+  <h3>Wecome to Expense Reimbursement System </h3>
 </div>
 
+<script>
+	function out(){
+    	document.getElementById("logout").addEventListener("click", ()=>{
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+          if (xhr.readyState == 4) { 
+	
+    		window.location.href = this.responseText;
+    		return;
+		 }
+        }
+        xhr.open('GET','/ers/logout',true);
+        xhr.send();
+      });
+	}
+</script>
 </body>
 </html>
