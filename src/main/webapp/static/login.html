@@ -6,16 +6,16 @@
 </head>
 <body>
 	<div>
-		<form onSubmit="onSubmit">
+		<form action="/ers/login">
 		Username: <input type="text" name="username" placeholder="Enter your username"><br>
 		Password: <input type="password" name="password" placeholder="Enter your password"><br>
-		<input type="submit" value="Submit">
+		<input type="submit" value="Submit" onclick="thing()">
 		</form>
 	</div>
 	
 	<script>
-		function onSubmit(e) {
-			e.preventDefault();
+		function thing() {
+			//e.preventDefault();
 			console.log('submitted');
 		}
 	</script>

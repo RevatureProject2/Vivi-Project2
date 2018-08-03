@@ -1,6 +1,7 @@
 package com.revature.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.revature.model.employee;
 import com.revature.service.reimburseService;
@@ -9,7 +10,7 @@ import com.revature.util.logUtil;
 
 public class loginController {
 	
-	public static String login(HttpServletRequest request) {
+	public static void login(HttpServletRequest request, HttpServletResponse response) {
 		
 		//If it's a GET we just return the view.
 	/*	if(request.getMethod().equals(FinalUtil.HTTP_GET)) {
@@ -17,26 +18,26 @@ public class loginController {
 		}
 		*/
 		//POST logic
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");	
+
 		employee loggedEmployee = reimburseService.getService().login(
-				new employee(
-						request.getParameter("username"),
-						request.getParameter("password")
-						));
+				new employee(username, password));
 	try {
 		
 		if(loggedEmployee.getUsername().equals("")) {
-			
-			return "/login.do";
+			response.sendError(400, "Invalid Login");
+			return;
 		}
 		else {
 			request.getSession().setAttribute("loggedCustomer", loggedEmployee);
-			return "/home.do";
+			response.sendRedirect("static/homepage.html");
+//			return "/home.do";
 		}
 	}
 	catch (Exception e)
 	{
 		logUtil.log.error(e.getMessage());
 	}
-	return "error";
 }
 }
