@@ -1,7 +1,5 @@
 package com.revature.controller;
 
-import java.io.PrintWriter;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.revature.model.employee;
@@ -25,20 +23,19 @@ public class loginController {
 						request.getParameter("password")
 						));
 	try {
-		 
+		
 		if(loggedEmployee.getUsername().equals("")) {
-			return "login.html";
+			
+			return "/login.do";
 		}
 		else {
 			request.getSession().setAttribute("loggedCustomer", loggedEmployee);
-			return "logged in!";
-		//	return "/login.do";
+			return "/home.do";
 		}
 	}
 	catch (Exception e)
 	{
 		logUtil.log.error(e.getMessage());
-		e.printStackTrace();
 	}
 	return "error";
 }

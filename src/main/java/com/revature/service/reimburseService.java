@@ -15,10 +15,16 @@ public class reimburseService {
 		}
 		return service;
 	}
-	public employee login(employee emp)
-	{
-		return employeeDao.getEmployeeDao().login(emp);
+	public employee login(employee emp) {
+		
+		employee loggedEmp = employeeDao.getEmployeeDao().select(emp);
+		if(loggedEmp.getPassword().equals(employeeDao.getEmployeeDao().getCustomerHash(emp)))
+			return loggedEmp;
+		
+		return new employee();
 	}
+	
+	
 	
 
 }

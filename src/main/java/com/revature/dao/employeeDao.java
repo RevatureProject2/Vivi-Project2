@@ -1,14 +1,8 @@
 package com.revature.dao;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
-
 import com.revature.jdbcConnection.jdbcConnection;
 import com.revature.model.employee;
 import com.revature.util.logUtil;
@@ -26,14 +20,14 @@ public class employeeDao implements ERS_DAO {
 		return employeeDao;
 	}
 
-	@Override
+/*	@Override
 	public employee login(employee emp) {
 		InputStream in = null;
 		if(emp.isAdmin() == 1)
 		{
 			Properties props = new Properties();		
 			try {
-			in = new FileInputStream("src/main/resources/connections.properties");
+			in = new FileInputStream("/ERS/src/main/resources/jdbcConnection.properties");
 			props.load(in);
 			} catch (IOException e1) {
 				
@@ -61,6 +55,8 @@ public class employeeDao implements ERS_DAO {
 							emp.setLogin(1);
 							return new employee(emp.getUsername(), emp.getPassword());
 						}
+						else
+							return new employee();
 						
 					}
 					else
@@ -101,6 +97,8 @@ public class employeeDao implements ERS_DAO {
 						emp.setLogin(1);
 						return new employee(emp.getUsername(), emp.getPassword());
 					}
+					else
+						return new employee();
 				}
 				else
 					throw new InvalidInputException("Wrong username or password.");
@@ -111,28 +109,47 @@ public class employeeDao implements ERS_DAO {
 		}
 		return null;	
 		}
-
+*/
 
 	@Override
-	public employee select(String username) {
+	public employee select(employee emp) {
 		try(Connection connection = jdbcConnection.getConnection()) {
 			int statementIndex = 0;
 			String command = "SELECT * FROM METADATA WHERE USERNAME = ?";
 			PreparedStatement statement = connection.prepareStatement(command);
-			statement.setString(++statementIndex, employee.getUsername());
+			statement.setString(++statementIndex, emp.getUsername());
 			ResultSet result = statement.executeQuery();
 
 			while(result.next()) {
 				
 				return new employee(
 						result.getString("username"),
-						result.getString("")
+						result.getString("password")
 						);
 			}
 		} catch (SQLException e) {
-			logUtil.log.warn("Exception selecting a customer", e);
+			logUtil.log.warn("Exception selecting an employee", e);
 		}
-		return new employee();
+			return new employee();
 	}
+	
+	public String getCustomerHash(employee emp) {
+		try(Connection connection = jdbcConnection.getConnection()) {
+			int statementIndex = 0;
+			String command = "SELECT GET_CUSTOMER_HASH(?,?) AS HASH FROM DUAL";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setString(++statementIndex, emp.getUsername());
+			statement.setString(++statementIndex, emp.getPassword());
+			ResultSet result = statement.executeQuery();
+
+			if(result.next()) {
+				return result.getString("HASH");
+			}
+		} catch (SQLException e) {
+			logUtil.log.warn("getHash exception", e);
+		} 
+		return new String();
+	}
+
 
 }

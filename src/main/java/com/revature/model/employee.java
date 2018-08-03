@@ -1,7 +1,7 @@
 package com.revature.model;
 
 public class employee {
-	private static String username;
+	private String username;
 	private String firstname;
 	private String lastname;
 	private String password;
@@ -42,7 +42,7 @@ public class employee {
 		this.password = password;
 	}
 
-	public static String getUsername() {
+	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
