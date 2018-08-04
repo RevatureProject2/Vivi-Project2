@@ -14,12 +14,8 @@ public class homeController {
 		return "homepage.html";
 	}
 	public static String request(HttpServletRequest req, HttpServletResponse res) {
-//		int amount = Integer.parseInt(req.getParameter("amount"));
-		try {
-			res.getWriter().append("http://localhost:8080/ers/static/request.html");
-		} catch (IOException e) {
-			logUtil.log.warn("request redirect throws exception");
-		}
+		int amount = Integer.parseInt(req.getParameter("amount"));
+		//call service
 		return null;
 	}
 }

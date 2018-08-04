@@ -28,8 +28,6 @@ public class loginController {
 	try {
 		if(loggedEmployee.getUsername().equals("")) {
 			response.sendRedirect("static/login.html");
-		//	response.sendError(400, "Invalid Login");
-		//	return;
 		}
 		else {
 			request.getSession().setAttribute("loggedCustomer", loggedEmployee);
