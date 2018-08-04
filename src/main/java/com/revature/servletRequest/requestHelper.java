@@ -13,7 +13,6 @@ public class requestHelper {
 		while(switchString.indexOf("/")>0) {
 			switchString = switchString.substring(0, switchString.indexOf("/"));
 		}
-		
 		switch(switchString)
 		{
 		case "login":
@@ -24,6 +23,9 @@ public class requestHelper {
 			break;
 		case "logout":
 			loginController.logout(req, res);
+			break;
+		case "submit":
+			homeController.request(req, res);
 			break;
 			
 		default:

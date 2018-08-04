@@ -19,7 +19,7 @@
       <li class="active"><a href="#">Home</a></li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Request <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Submit</a></li>
+          <li id="submit" onclick="request()"><a href="#">Submit</a></li>
           <li><a href="#">Pending</a></li>
           <li><a href="#">Approved</a></li>
         </ul>
@@ -39,13 +39,20 @@
   <h3>Wecome to Expense Reimbursement System </h3>
 </div>
 
+<div id="submit-form" style="display: none;">
+  <form id="req-submit"action="/ers/submit" >
+  Amount: <input type="number" name="amount"><br>
+  <input type="submit" value="Enter">
+  </form>
+</div>
+
+
 <script>
 	function out(){
     	document.getElementById("logout").addEventListener("click", ()=>{
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(){
           if (xhr.readyState == 4) { 
-	
     		window.location.href = this.responseText;
     		return;
 		 }
@@ -54,6 +61,28 @@
         xhr.send();
       });
 	}
+	
+	function request(){
+    var x = document.getElementById("submit-form");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+  //   	document.getElementById("submit").addEventListener("click", ()=>{
+  //       var xhr = new XMLHttpRequest();
+  //       xhr.onreadystatechange = function(){
+  //         if (xhr.readyState == 4) { 
+  //   		window.location.href = this.responseText;
+  //   		return;
+	// 	 }
+  //       }
+  //       xhr.open('GET','/ers/submit',true);
+  //       xhr.send();
+
+  //     });
+	 }
+
 </script>
 </body>
 </html>
