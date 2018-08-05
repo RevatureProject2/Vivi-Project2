@@ -2,21 +2,14 @@ package com.revature.model;
 
 public class employee {
 	private String username;
-	private String firstname;
-	private String lastname;
 	private String password;
-	private String email;
 	private int accountID;
 	private int admin;
 	private int login;
-	private int balance;
 	
 	public employee() {
 		this.username = "";
 		this.password = "";
-		this.firstname = "";
-		this.lastname = "";
-		this.email = "";
 	}
 	public employee(String username, String password, int admin, int login) {
 		super();
@@ -25,16 +18,6 @@ public class employee {
 		this.admin = admin;
 		this.login = login;
 	}
-	
-	public employee(String username, String firstname, String lastname, String email, int balance) {
-		super();
-		this.username = username;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.email = email;
-		this.balance = balance;
-	}
-	
 
 	public employee(String username, String password) {
 		super();
@@ -48,29 +31,11 @@ public class employee {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getFirstname() {
-		return firstname;
-	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-	public String getLastname() {
-		return lastname;
-	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public int getAccountID() {
 		return accountID;
@@ -90,13 +55,6 @@ public class employee {
 	public void setLogin(int login) {
 		this.login = login;
 	}
-	public int getBalance() {
-		return balance;
-	}
-	public void setBalance(int balance) {
-		this.balance = balance;
-	}
-	
 	
 	
 }

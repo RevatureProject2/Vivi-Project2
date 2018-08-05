@@ -5,9 +5,7 @@ import com.revature.model.employee;
 import com.revature.model.request;
 
 public class reimburseService {
-
 	private static reimburseService service;
-
 	private reimburseService() {
 	}
 	public static reimburseService getService() {
@@ -21,12 +19,14 @@ public class reimburseService {
 		employee loggedEmp = employeeDao.getEmployeeDao().select(emp);
 		if(loggedEmp.getPassword().equals(employeeDao.getEmployeeDao().getCustomerHash(emp)))
 			return loggedEmp;
-		
+
 		return new employee();
 	}
-	public request submit(request req) {
+	
+	public boolean submit(request req) {
+		boolean re = employeeDao.getEmployeeDao().insertRequest(req);
+		return re;
 		
-		return null;
 	}
 	
 	

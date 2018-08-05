@@ -2,27 +2,20 @@ package com.revature.model;
 
 public class request {
 
-		private int accountID;
 		private String status;
 		private int amount;
-		private int managerID;
+		private String managerID;
+		private String username;
+		private int req_id;
 		
-		public request(int accountID, String status, int amount, int managerID) {
+		public request(String username, int amount) {
 			super();
-			this.accountID = accountID;
-			this.status = status;
+			this.username = username;
 			this.amount = amount;
-			this.managerID = managerID;
+			this.status = "pending";
+			this.managerID = "";
 		}
-
-		public int getAccountID() {
-			return accountID;
-		}
-
-		public void setAccountID(int accountID) {
-			this.accountID = accountID;
-		}
-
+		
 		public String getStatus() {
 			return status;
 		}
@@ -39,14 +32,29 @@ public class request {
 			this.amount = amount;
 		}
 
-		public int getManagerID() {
+		public String getManagerID() {
 			return managerID;
 		}
 
-		public void setManagerID(int managerID) {
+		public void setManagerID(String managerID) {
 			this.managerID = managerID;
 		}
-		
+
+		public String getUsername() {
+			return username;
+		}
+
+		public void setUsername(String username) {
+			this.username = username;
+		}
+
+		public int getReq_id() {
+			return req_id;
+		}
+
+		public void setReq_id(int req_id) {
+			this.req_id = req_id;
+		}
 		
 		
 		

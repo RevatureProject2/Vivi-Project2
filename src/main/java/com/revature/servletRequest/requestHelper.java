@@ -25,7 +25,7 @@ public class requestHelper {
 			loginController.logout(req, res);
 			break;
 		case "submit":
-			homeController.request(req, res);
+			homeController.requestSubmit(req, res);
 			break;
 		
 			

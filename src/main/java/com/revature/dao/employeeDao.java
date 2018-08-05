@@ -1,4 +1,5 @@
 package com.revature.dao;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +8,6 @@ import com.revature.jdbcConnection.jdbcConnection;
 import com.revature.model.employee;
 import com.revature.model.request;
 import com.revature.util.logUtil;
-
 
 public class employeeDao implements ERS_DAO {
 
@@ -43,19 +43,58 @@ public class employeeDao implements ERS_DAO {
 			return new employee();
 	}
 	
-	public boolean insertRequest(employee emp, request req){
-		try(Connection connection = jdbcConnection.getConnection()){
+	public boolean insertRequest(request req){
+/*		try(Connection connection = jdbcConnection.getConnection()){
 			int index = 0;
 			String sql = "INSERT INTO REQUEST VALUES(?,?,?,?)";
 			PreparedStatement stm = connection.prepareStatement(sql);
-			stm.setInt(++index, emp.getAccountID());
+	//		System.out.println(req.toString());
+			
+			stm.setInt(++index, req.getAccountID());
 			stm.setString(++index, req.getStatus());
 			stm.setInt(++index, req.getAmount());
-			stm.setInt(++index, req.getManagerID());
+			stm.setString(++index, req.getManagerID());
+			
+			ResultSet rs = stm.executeQuery();
+
+			if(stm.executeUpdate() > 0) {
+				return true;
+			}
+
 		}catch (SQLException e) {
 			logUtil.log.warn("Exception inserting request");
+			e.printStackTrace();
+		}
+		return false;*/
+		try{			
+			String sql = "call insert_request(?,?,?,?,?)";
+			int index = 0;
+
+			CallableStatement cs = conn.prepareCall(sql);
+			
+			cs.setString(++index, req.getStatus());
+			cs.setInt(++index, req.getAmount());
+			cs.setString(++index, req.getManagerID());
+			cs.setString(++index, req.getUsername());
+			cs.registerOutParameter(++index, java.sql.Types.INTEGER);
+
+			cs.executeUpdate();
+			
+			if(cs.getInt(5) == 1)
+			{
+				System.out.println("Request submitted");
+				return true;
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println(e.getMessage());
 		}
 		return false;
+	}
+
+	public request viewRequest() {
+		return null;
 	}
 	
 	public String getCustomerHash(employee emp) {

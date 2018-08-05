@@ -41,13 +41,47 @@
 
 <div id="submit-form" style="display: none;">
   <form id="req-submit"action="/ers/submit" >
-  Amount: <input type="number" name="amount"><br>
+  Username: <input type = "text" name=username><br>
+  Amount: <input type="text" name="amount"><br>
   <input type="submit" value="Enter">
   </form>
 </div>
 
-
 <script>
+	function out(){
+    	document.getElementById("logout").addEventListener("click", ()=>{
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+          if (xhr.readyState == 4) { 
+    		window.location.href = this.responseText;
+    		return;
+		 }
+        }
+        xhr.open('GET','/ers/logout',true);
+        xhr.send();
+      });
+	}
+	
+	function request(){
+    var x = document.getElementById("submit-form");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+	}
+  //   	document.getElementById("submit").addEventListener("click", ()=>{
+  //       var xhr = new XMLHttpRequest();
+  //       xhr.onreadystatechange = function(){
+  //         if (xhr.readyState == 4) { 
+  //   		window.location.href = this.responseText;
+  //   		return;
+	// 	 }
+  //       }
+  //       xhr.open('GET','/ers/submit',true);
+  //       xhr.send();
+
+  //     });
 
 </script>
 </body>
