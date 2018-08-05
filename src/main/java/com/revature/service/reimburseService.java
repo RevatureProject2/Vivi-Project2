@@ -1,7 +1,9 @@
 package com.revature.service;
+import java.util.List;
 
 import com.revature.dao.employeeDao;
 import com.revature.model.employee;
+import com.revature.model.info;
 import com.revature.model.request;
 
 public class reimburseService {
@@ -26,7 +28,17 @@ public class reimburseService {
 	public boolean submit(request req) {
 		boolean re = employeeDao.getEmployeeDao().insertRequest(req);
 		return re;
-		
+	}
+	
+	public List<request> viewRequest(String status){
+		return employeeDao.getEmployeeDao().viewRequest(status);
+	}
+	
+	public info viewInfo() {
+		return employeeDao.getEmployeeDao().viewInfo();
+	}
+	public boolean update(info inf) {
+		return employeeDao.getEmployeeDao().update(inf);
 	}
 	
 	

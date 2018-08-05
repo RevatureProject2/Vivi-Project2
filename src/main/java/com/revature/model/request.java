@@ -8,6 +8,16 @@ public class request {
 		private String username;
 		private int req_id;
 		
+		
+		public request(String status, int amount, String managerID, String username, int req_id) {
+			super();
+			this.status = status;
+			this.amount = amount;
+			this.managerID = managerID;
+			this.username = username;
+			this.req_id = req_id;
+		}
+
 		public request(String username, int amount) {
 			super();
 			this.username = username;

@@ -17,8 +17,7 @@ public class homeController {
 	}
 	public static void requestSubmit(HttpServletRequest req, HttpServletResponse res) {
 		int amount = Integer.parseInt(req.getParameter("amount"));
-		String username = req.getParameter("username");
-		if(reimburseService.getService().submit(new request(username, amount)))
+		if(reimburseService.getService().submit(new request(loginController.username, amount)))
 			try {
 				res.getWriter().append("Request successfully sent to the system");
 			} catch (IOException e) {
@@ -31,6 +30,11 @@ public class homeController {
 				logUtil.log.error("IO Exception throws when sending request");
 				e.printStackTrace();
 			}
-		
 	}
+	
+	
+
+	
+	
+	
 }

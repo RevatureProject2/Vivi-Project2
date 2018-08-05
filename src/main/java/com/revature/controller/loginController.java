@@ -11,16 +11,9 @@ import com.revature.util.logUtil;
 //import com.revature.util.FinalUtil;
 
 public class loginController {
-	
+	public static String username="";
 	public static void login(HttpServletRequest request, HttpServletResponse response) {
-		
-		//If it's a GET we just return the view.
-	/*	if(request.getMethod().equals(FinalUtil.HTTP_GET)) {
-			return "login.jsp";
-		}
-		*/
-		//POST logic
-		String username = request.getParameter("username");
+		username = request.getParameter("username");
 		String password = request.getParameter("password");	
 
 		employee loggedEmployee = reimburseService.getService().login(
@@ -39,7 +32,6 @@ public class loginController {
 		logUtil.log.error(e.getMessage());
 	}
 }
-
 	public static void logout(HttpServletRequest request, HttpServletResponse response) {
 		request.getSession().invalidate();
 		try {

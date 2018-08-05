@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.revature.controller.loginController;
 import com.revature.jdbcConnection.jdbcConnection;
 import com.revature.model.employee;
+import com.revature.model.info;
 import com.revature.model.request;
 import com.revature.util.logUtil;
 
@@ -44,28 +49,6 @@ public class employeeDao implements ERS_DAO {
 	}
 	
 	public boolean insertRequest(request req){
-/*		try(Connection connection = jdbcConnection.getConnection()){
-			int index = 0;
-			String sql = "INSERT INTO REQUEST VALUES(?,?,?,?)";
-			PreparedStatement stm = connection.prepareStatement(sql);
-	//		System.out.println(req.toString());
-			
-			stm.setInt(++index, req.getAccountID());
-			stm.setString(++index, req.getStatus());
-			stm.setInt(++index, req.getAmount());
-			stm.setString(++index, req.getManagerID());
-			
-			ResultSet rs = stm.executeQuery();
-
-			if(stm.executeUpdate() > 0) {
-				return true;
-			}
-
-		}catch (SQLException e) {
-			logUtil.log.warn("Exception inserting request");
-			e.printStackTrace();
-		}
-		return false;*/
 		try{			
 			String sql = "call insert_request(?,?,?,?,?)";
 			int index = 0;
@@ -93,10 +76,87 @@ public class employeeDao implements ERS_DAO {
 		return false;
 	}
 
-	public request viewRequest() {
-		return null;
+	public List<request> viewRequest(String status) {
+		List<request> req = new ArrayList<request>();
+		
+		try(Connection connection = jdbcConnection.getConnection()) {
+			String command = "SELECT * FROM REQUEST WHERE STATUS = '?' AND USERNAME='?'";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setString(1, status);
+			statement.setString(1, loginController.username);
+
+			ResultSet result = statement.executeQuery();
+
+			while(result.next()) {
+				req.add(new request(
+					result.getString("status"),
+					result.getInt("amount"),
+					result.getString("resolvedadmin"),
+					result.getString("username"),
+					result.getInt("accountid")
+					));
+			}
+		} catch (SQLException e) {
+			logUtil.log.warn("Exception selecting an employee", e);
+		}
+
+		return req;
 	}
 	
+	public info viewInfo() {
+		
+		try(Connection connection = jdbcConnection.getConnection()) {
+			String command = "SELECT * FROM ACCOUNT WHERE USERNAME='?'";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setString(1, loginController.username);
+
+			ResultSet result = statement.executeQuery();
+
+			while(result.next()) {
+				return new info(
+					result.getString("username"),
+					result.getString("firstname"),
+					result.getString("lastname"),
+					result.getInt("balance"),
+					result.getString("email")
+					);
+			}
+		} catch (SQLException e) {
+			logUtil.log.warn("Exception selecting an employee", e);
+		}
+		return null;
+
+	}
+	
+	public boolean update(info inf) {
+		try{	
+			String sql = "call update_account(?,?,?,?,?)";
+			
+			CallableStatement cs = conn.prepareCall(sql);
+			
+			cs.setString(1, loginController.username);
+			cs.setString(2, inf.getFirstname());
+			cs.setString(3, inf.getLastname());
+			cs.setInt(4,  inf.getBalance());
+			cs.setString(5,  inf.getEmail());
+			cs.registerOutParameter(6, java.sql.Types.INTEGER);
+			cs.executeUpdate();
+			
+			if(cs.getInt(6) == 1)
+			{
+				logUtil.log.info("Account updated");
+				return true;
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+
+
 	public String getCustomerHash(employee emp) {
 		try(Connection connection = jdbcConnection.getConnection()) {
 			int statementIndex = 0;
