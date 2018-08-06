@@ -1,13 +1,22 @@
 package com.revature.model;
 
-public class request {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class request {
+		@JsonProperty("status")
 		private String status;
-		private int amount;
-		private String managerID;
-		private String username;
-		private int req_id;
 		
+		@JsonProperty("amount")
+		private int amount;
+		
+		@JsonProperty("manager_ID")
+		private String managerID;
+		
+		@JsonProperty("username")
+		private String username;
+		
+		@JsonProperty("request_ID")
+		private int req_id;
 		
 		public request(String status, int amount, String managerID, String username, int req_id) {
 			super();

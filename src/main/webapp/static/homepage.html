@@ -20,13 +20,13 @@
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Request <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li id="submit" onclick="request()"><a href="#">Submit</a></li>
-          <li><a href="#">Pending</a></li>
-          <li><a href="#">Approved</a></li>
+          <li id="pending" onclick="view()"><a href="#">Pending> </a></li>
+          <li id = "approved" onclick = "view_approved()"><a href="#">Approved</a></li>
         </ul>
       </li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Account <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Account Info</a></li>
+          <li id="info" onclick="view_info()"><a href="#">Account Info</a></li>
           <li><a href="#">Update account</a></li>
         </ul>
       </li>
@@ -41,11 +41,14 @@
 
 <div id="submit-form" style="display: none;">
   <form id="req-submit"action="/ers/submit" >
-<!--   Username: <input type = "text" name=username><br> -->
   Amount: <input type="text" name="amount"><br>
   <input type="submit" value="Enter">
   </form>
 </div>
+
+<div id="view-request">Requests</div>
+<div id = "view-approved"></div>
+<div id= "view-info"></div>
 
 <script>
 	function out(){
@@ -70,18 +73,95 @@
         x.style.display = "none";
     }
 	}
-  //   	document.getElementById("submit").addEventListener("click", ()=>{
-  //       var xhr = new XMLHttpRequest();
-  //       xhr.onreadystatechange = function(){
-  //         if (xhr.readyState == 4) { 
-  //   		window.location.href = this.responseText;
-  //   		return;
-	// 	 }
-  //       }
-  //       xhr.open('GET','/ers/submit',true);
-  //       xhr.send();
+	function view(){
+    var xhr = new XMLHttpRequest();
 
-  //     });
+     	document.getElementById("pending").addEventListener("click", ()=>{
+        var xhr = new XMLHttpRequest();
+         xhr.onreadystatechange = function(){
+           if (xhr.readyState == 4 && xhr.status==200) { 
+            var ajaxObj = JSON.parse(this.responseText);
+            document.body.onload = addDOM();
+            function addDOM(){
+              let divNode= document.createElement("div");
+              for(let obj of ajaxObj)
+              {
+            	  console.log(obj)
+                for(let key in obj)
+                {
+                  console.log(key)
+                  let element = document.createTextNode(`${key} ${obj[key]}`);
+                  divNode.appendChild(element); 
+                }
+              }
+              document.getElementById("view-request").appendChild(divNode);
+            }  
+            }
+         }
+         xhr.open('GET','/ers/pending',true);
+         xhr.send();
+       });
+  
+  }
+
+  	function view_approved(){
+    var xhr = new XMLHttpRequest();
+
+     	document.getElementById("approved").addEventListener("click", ()=>{
+        var xhr = new XMLHttpRequest();
+         xhr.onreadystatechange = function(){
+           if (xhr.readyState == 4 && xhr.status==200) { 
+            var ajaxObj = JSON.parse(this.responseText);
+            document.body.onload = addDOM();
+            function addDOM(){
+              let divNode= document.createElement("div");
+              for(let obj of ajaxObj)
+              {
+            	  console.log(obj)
+                for(let key in obj)
+                {
+                  console.log(key)
+                  let element = document.createTextNode(`${key} ${obj[key]}`);
+                  divNode.appendChild(element); 
+                }
+              }
+              document.getElementById("view-approved").appendChild(divNode);
+            }  
+            }
+         }
+         xhr.open('GET','/ers/approved',true);
+         xhr.send();
+       });
+  
+  }
+  function view_info(){
+    var xhr = new XMLHttpRequest();
+
+     	document.getElementById("info").addEventListener("click", ()=>{
+        var xhr = new XMLHttpRequest();
+         xhr.onreadystatechange = function(){
+           if (xhr.readyState == 4 && xhr.status==200) { 
+            var obj = JSON.parse(this.responseText);
+
+            document.body.onload = addDOM();
+            function addDOM(){
+              let divNode= document.createElement("div");
+                for(let key in obj)
+                {
+                  let element = document.createTextNode(`${key} ${obj[key]}`);
+                  divNode.appendChild(element); 
+                }
+              
+              document.getElementById("view-info").appendChild(divNode);
+            }  
+            }
+         }
+         xhr.open('GET','/ers/info',true);
+         xhr.send();
+       });
+  
+  }
+
 
 </script>
 </body>

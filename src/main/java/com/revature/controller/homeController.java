@@ -17,12 +17,12 @@ public class homeController {
 	}
 	public static void requestSubmit(HttpServletRequest req, HttpServletResponse res) {
 		int amount = Integer.parseInt(req.getParameter("amount"));
-		if(reimburseService.getService().submit(new request(loginController.username, amount)))
+		if(reimburseService.getService().submit(new request((String) loginController.session.getAttribute("username"), amount)))
 			try {
 				res.getWriter().append("Request successfully sent to the system");
 			} catch (IOException e) {
 				logUtil.log.warn("IO Exception throws when sending request");
-			}
+			} 
 		else
 			try {
 				res.getWriter().append("Request failed to send. Please try again");

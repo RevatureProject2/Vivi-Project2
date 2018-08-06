@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.revature.model.employee;
 import com.revature.service.reimburseService;
@@ -11,9 +12,12 @@ import com.revature.util.logUtil;
 //import com.revature.util.FinalUtil;
 
 public class loginController {
-	public static String username="";
+	public static HttpSession session = null;
+	
 	public static void login(HttpServletRequest request, HttpServletResponse response) {
-		username = request.getParameter("username");
+		
+		String username = request.getParameter("username");
+		logUtil.log.info(username);
 		String password = request.getParameter("password");	
 
 		employee loggedEmployee = reimburseService.getService().login(
@@ -23,7 +27,10 @@ public class loginController {
 			response.sendRedirect("static/login.html");
 		}
 		else {
-			request.getSession().setAttribute("loggedCustomer", loggedEmployee);
+			session = request.getSession();
+			session.setAttribute("loggedCustomer", loggedEmployee);
+			session.setAttribute("username", username);
+			
 			response.sendRedirect("static/homepage.html");
 		}
 	}

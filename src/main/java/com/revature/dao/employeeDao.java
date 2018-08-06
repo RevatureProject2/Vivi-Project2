@@ -80,20 +80,23 @@ public class employeeDao implements ERS_DAO {
 		List<request> req = new ArrayList<request>();
 		
 		try(Connection connection = jdbcConnection.getConnection()) {
-			String command = "SELECT * FROM REQUEST WHERE STATUS = '?' AND USERNAME='?'";
+			String command = "SELECT * FROM REQUEST WHERE STATUS = ? AND USERNAME=?";
 			PreparedStatement statement = connection.prepareStatement(command);
+			logUtil.log.info(status);
+			logUtil.log.info((String) loginController.session.getAttribute("username"));
+			
 			statement.setString(1, status);
-			statement.setString(1, loginController.username);
+			statement.setString(2, (String) loginController.session.getAttribute("username"));
 
 			ResultSet result = statement.executeQuery();
-
+			logUtil.log.info("here");
 			while(result.next()) {
 				req.add(new request(
 					result.getString("status"),
 					result.getInt("amount"),
 					result.getString("resolvedadmin"),
 					result.getString("username"),
-					result.getInt("accountid")
+					result.getInt("req_id")
 					));
 			}
 		} catch (SQLException e) {
@@ -106,9 +109,9 @@ public class employeeDao implements ERS_DAO {
 	public info viewInfo() {
 		
 		try(Connection connection = jdbcConnection.getConnection()) {
-			String command = "SELECT * FROM ACCOUNT WHERE USERNAME='?'";
+			String command = "SELECT * FROM ACCOUNT WHERE USERNAME=?";
 			PreparedStatement statement = connection.prepareStatement(command);
-			statement.setString(1, loginController.username);
+			statement.setString(1, (String) loginController.session.getAttribute("username"));
 
 			ResultSet result = statement.executeQuery();
 
@@ -134,7 +137,7 @@ public class employeeDao implements ERS_DAO {
 			
 			CallableStatement cs = conn.prepareCall(sql);
 			
-			cs.setString(1, loginController.username);
+			cs.setString(1, (String) loginController.session.getAttribute("username"));
 			cs.setString(2, inf.getFirstname());
 			cs.setString(3, inf.getLastname());
 			cs.setInt(4,  inf.getBalance());
@@ -155,8 +158,6 @@ public class employeeDao implements ERS_DAO {
 		return false;
 	}
 	
-
-
 	public String getCustomerHash(employee emp) {
 		try(Connection connection = jdbcConnection.getConnection()) {
 			int statementIndex = 0;
