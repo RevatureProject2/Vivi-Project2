@@ -46,9 +46,13 @@
   </form>
 </div>
 
-<div id="view-request">Requests</div>
-<div id = "view-approved"></div>
-<div id= "view-info"></div>
+<div id="view-request">
+<h4>Pending Request</h4>
+</div>
+<div id = "view-approved">
+  <h4>Approved Request</h4>
+</div>
+<div id= "view-info"><h4>Employee information</h4></div>
 
 <script>
 	function out(){
@@ -103,8 +107,7 @@
        });
   
   }
-
-  	function view_approved(){
+  function view_approved(){
     var xhr = new XMLHttpRequest();
 
      	document.getElementById("approved").addEventListener("click", ()=>{

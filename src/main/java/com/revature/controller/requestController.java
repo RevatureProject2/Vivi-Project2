@@ -65,6 +65,9 @@ public class requestController {
 		info inf = reimburseService.getService().viewInfo();
 		
 		mapper.writeValue(pw, inf);
+	}
+	public static void updateInfo(HttpServletRequest req, HttpServletResponse res) {
+		
 		
 	}
 }
