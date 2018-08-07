@@ -15,6 +15,15 @@ public class info {
 		this.balance = balance;
 		this.email = email;
 	}
+	
+
+	public info(String firstname, String lastname, String email) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+	}
+
 
 	public String getUsername() {
 		return username;

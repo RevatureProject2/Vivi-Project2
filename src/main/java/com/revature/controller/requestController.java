@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.model.employee;
 import com.revature.model.info;
 import com.revature.model.request;
 import com.revature.service.reimburseService;
@@ -66,8 +67,34 @@ public class requestController {
 		
 		mapper.writeValue(pw, inf);
 	}
-	public static void updateInfo(HttpServletRequest req, HttpServletResponse res) {
+	public static boolean updateInfo(HttpServletRequest req, HttpServletResponse res) {
+
+		String first = req.getParameter("firstname");
+		String last = req.getParameter("lastname");	
+		String email = req.getParameter("email");	
 		
+		info inf = new info(first, last, email);
 		
+		if(reimburseService.getService().update(inf)) {
+			System.out.println("sucess");
+		}
+		return false;
+/*	try {
+		if(loggedEmployee.getUsername().equals("")) {
+			response.sendRedirect("static/login.html");
+		}
+		else {
+			session = request.getSession();
+			session.setAttribute("loggedCustomer", loggedEmployee);
+			session.setAttribute("username", username);
+			
+			response.sendRedirect("static/homepage.html");
+		}
 	}
+	catch (Exception e)
+	{
+		logUtil.log.error(e.getMessage());
+	}
+		
+*/	}
 }

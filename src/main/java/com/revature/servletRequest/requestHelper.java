@@ -39,6 +39,8 @@ public class requestHelper {
 			break;
 		case "info":
 			requestController.viewInfo(req, res);
+		case "update":
+			requestController.updateInfo(req, res);
 		default:
 		//	return "404.jsp";
 
