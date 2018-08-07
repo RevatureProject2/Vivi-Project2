@@ -23,8 +23,9 @@ public class employee {
 		super();
 		this.username = username;
 		this.password = password;
+		this.admin= 0;
 	}
-
+	
 	public String getUsername() {
 		return username;
 	}

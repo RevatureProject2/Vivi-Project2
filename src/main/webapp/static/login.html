@@ -6,12 +6,13 @@
 </head>
 <body>
 	<div>
-		<form action="/ers/login">
+		<form id = "login"action="/ers/login">
 		Username: <input type="text" name="username" placeholder="Enter your username"><br>
 		Password: <input type="password" name="password" placeholder="Enter your password"><br>
-		<input type="submit" value = "Submit">
-		
-		</form>
+		<button type="submit" value = "Login">Login as Employee</button>
+		<button type="submit" formaction = "/ers/login_manager" value = "Login">Login as Manager</button>
+
+		</form>		
 	</div>
 	
 </body>

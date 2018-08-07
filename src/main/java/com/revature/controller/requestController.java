@@ -67,7 +67,7 @@ public class requestController {
 		
 		mapper.writeValue(pw, inf);
 	}
-	public static boolean updateInfo(HttpServletRequest req, HttpServletResponse res) {
+	public static boolean updateInfo(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
 		String first = req.getParameter("firstname");
 		String last = req.getParameter("lastname");	
@@ -76,25 +76,8 @@ public class requestController {
 		info inf = new info(first, last, email);
 		
 		if(reimburseService.getService().update(inf)) {
-			System.out.println("sucess");
+			res.getWriter().append("Update success");
 		}
 		return false;
-/*	try {
-		if(loggedEmployee.getUsername().equals("")) {
-			response.sendRedirect("static/login.html");
-		}
-		else {
-			session = request.getSession();
-			session.setAttribute("loggedCustomer", loggedEmployee);
-			session.setAttribute("username", username);
-			
-			response.sendRedirect("static/homepage.html");
-		}
 	}
-	catch (Exception e)
-	{
-		logUtil.log.error(e.getMessage());
 	}
-		
-*/	}
-}

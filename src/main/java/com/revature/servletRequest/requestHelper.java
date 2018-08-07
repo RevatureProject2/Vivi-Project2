@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.revature.controller.homeController;
 import com.revature.controller.loginController;
 import com.revature.controller.requestController;
+import com.revature.util.logUtil;
 
 public class requestHelper {
 	public static void process(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException
@@ -41,9 +42,12 @@ public class requestHelper {
 			requestController.viewInfo(req, res);
 		case "update":
 			requestController.updateInfo(req, res);
+		case "login_manager":
+			loginController.login_manager(req, res);
+			break;
 		default:
-		//	return "404.jsp";
-
+			logUtil.log.info("selection not on menu");
+			
 		}
 	}
 }

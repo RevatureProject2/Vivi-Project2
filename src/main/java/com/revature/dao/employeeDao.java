@@ -133,18 +133,18 @@ public class employeeDao implements ERS_DAO {
 	
 	public boolean update(info inf) {
 		try{	
-			String sql = "call update_account(?,?,?,?)";
+			String sql = "call update_account(?,?,?,?,?)";
 			
 			CallableStatement cs = conn.prepareCall(sql);
 			
 			cs.setString(1, (String) loginController.session.getAttribute("username"));
 			cs.setString(2, inf.getFirstname());
 			cs.setString(3, inf.getLastname());
-			cs.setString(5,  inf.getEmail());
-			cs.registerOutParameter(6, java.sql.Types.INTEGER);
+			cs.setString(4,  inf.getEmail());
+			cs.registerOutParameter(5, java.sql.Types.INTEGER);
 			cs.executeUpdate();
 			
-			if(cs.getInt(6) == 1)
+			if(cs.getInt(5) == 1)
 			{
 				logUtil.log.info("Account updated");
 				return true;
