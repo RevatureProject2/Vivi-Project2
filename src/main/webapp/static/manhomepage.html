@@ -56,6 +56,18 @@
     </form>
   </div>
   
+  <div id = "resolve-req">
+    <form action = "/ers/resolve" method="post">
+      Request ID: <input type = "number" name="req-id"><br>
+      <fieldset>
+      <input id = "approve" type ="radio" value="approved" name="radio">
+      <label for ="approve">Approve</label>
+      <input id = "deny" type = "radio" value = "deny" name = "radio">
+      <label for ="deny">Deny</label>
+      </fieldset>
+      <input type = "submit" value = "Update">
+    </form>
+  </div>
 
 <div id="view-request">
 <h4>Pending Request</h4>

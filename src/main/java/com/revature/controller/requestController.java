@@ -23,7 +23,7 @@ public class requestController {
 		res.setContentType("application/json");
 		PrintWriter pw = res.getWriter();
 		ObjectMapper mapper = new ObjectMapper();
-		List<request> pd_req  = reimburseService.getService().viewRequest("pending");
+		List<request> pd_req  = reimburseService.getService().viewRequest("pending", req.getSession().getAttribute("username").toString());
 		try {
 			mapper.writeValue(pw, pd_req);
 			return;
@@ -43,7 +43,7 @@ public class requestController {
 		res.setContentType("application/json");
 		PrintWriter pw = res.getWriter();
 		ObjectMapper mapper = new ObjectMapper();
-		List<request> pd_req  = reimburseService.getService().viewRequest("approved");
+		List<request> pd_req  = reimburseService.getService().viewRequest("approved", req.getSession().getAttribute("username").toString());
 		try {
 			mapper.writeValue(pw, pd_req);
 			return;
@@ -129,6 +129,14 @@ public class requestController {
 		List<info> inf = reimburseService.getService().viewAllInfo();
 		
 		mapper.writeValue(pw, inf);
+		
+	}
+	public static void resolve(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		String status = req.getParameter("radio");
+		int req_id = Integer.parseInt(req.getParameter("req-id"));
+		if(reimburseService.getService().resolve(status,req_id, req.getSession().getAttribute("username").toString())) {
+			res.sendRedirect("static/manhomepage.html");
+		}
 		
 	}
 	}

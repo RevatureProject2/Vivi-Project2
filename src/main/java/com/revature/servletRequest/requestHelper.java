@@ -40,6 +40,7 @@ public class requestHelper {
 			break;
 		case "info":
 			requestController.viewInfo(req, res);
+			break;
 		case "update":
 			requestController.updateInfo(req, res);
 		case "login_manager":
@@ -53,6 +54,10 @@ public class requestHelper {
 			break;
 		case "allInfo":
 			requestController.allInfo(req, res);
+			break;
+		case "resolve":
+			requestController.resolve(req, res);
+			break;
 		default:
 			logUtil.log.info("selection not on menu");
 			

@@ -1,6 +1,7 @@
 package com.revature.service;
 import java.util.List;
 
+import com.revature.controller.loginController;
 import com.revature.dao.employeeDao;
 import com.revature.model.employee;
 import com.revature.model.info;
@@ -44,25 +45,27 @@ public class reimburseService {
 		return re;
 	}
 	
-	public List<request> viewRequest(String status){
-		return employeeDao.getEmployeeDao().viewRequest(status);
+	public List<request> viewRequest(String status, String username){
+		return employeeDao.getEmployeeDao().viewRequest(status, username);
 	}
 	
 	public List<request> viewAllRequest(String status){
 		return employeeDao.getEmployeeDao().viewAll(status);
 	}
-
 	
 	public info viewInfo() {
 		return employeeDao.getEmployeeDao().viewInfo();
 	}
-	
 	
 	public boolean update(info inf) {
 		return employeeDao.getEmployeeDao().update(inf);
 	}
 	public List<info> viewAllInfo() {
 		return employeeDao.getEmployeeDao().viewAllInfo();
+	}
+	//String status, int amount, String managerID, String username, int req_id
+	public boolean resolve(String status, int req_id, String username) {
+		return employeeDao.getEmployeeDao().update_request(new request(status, -1,"", username, req_id));
 	}
 	
 	

@@ -77,14 +77,14 @@ public class employeeDao implements ERS_DAO {
 		return false;
 	}
 
-	public List<request> viewRequest(String status) {
+	public List<request> viewRequest(String status, String username) {
 		List<request> req = new ArrayList<request>();
 		
 		try(Connection connection = jdbcConnection.getConnection()) {
 			String command = "SELECT * FROM REQUEST WHERE STATUS = ? AND USERNAME=?";
 			PreparedStatement statement = connection.prepareStatement(command);
 			logUtil.log.info(status);
-			logUtil.log.info((String) loginController.session.getAttribute("username"));
+			logUtil.log.info(username);
 			
 			statement.setString(1, status);
 			statement.setString(2, (String) loginController.session.getAttribute("username"));
@@ -204,6 +204,7 @@ public class employeeDao implements ERS_DAO {
 	}
 
 	public List<info> viewAllInfo() {
+
 		try {
 						
 			String sql = "SELECT * FROM ACCOUNT";			
@@ -227,5 +228,24 @@ public class employeeDao implements ERS_DAO {
 		
 		return null;
 	}
+	//public request(String status, int amount, String managerID, String username, int req_id) {
 
+	public boolean update_request(request req) {
+		String sql = "call update_request(?,?,?)";
+		try {
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setString(1, req.getStatus());
+			cs.setInt(2, req.getReq_id());
+			cs.registerOutParameter(3, java.sql.Types.INTEGER);
+			cs.executeUpdate();
+			
+			if(cs.getInt(3) == 1) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 }

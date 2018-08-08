@@ -34,7 +34,6 @@ public class request {
 			this.status = "pending";
 			this.managerID = "";
 		}
-		
 		public String getStatus() {
 			return status;
 		}
