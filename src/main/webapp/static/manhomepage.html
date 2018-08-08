@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Manager Homepage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse" >
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ERS</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Request <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <!-- <li id="submit" onclick="request()"><a href="#">Submit</a></li> -->
+          <li id="pending" onclick="view()"><a href="#">Pending> </a></li>
+          <li id = "approved" onclick = "view_approved()"><a href="#">Approved</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Account <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li id="info" onclick="view_info()"><a href="#">Account Info</a></li>
+        </ul>
+      </li>
+      <li id="logout" onclick="out()"><a href="#">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+  <h3>ERS Manager Homepage </h3>
+</div>
+
+<div id="submit-form" style="display: none;">
+  <form id="req-submit"action="/ers/submit" >
+  Amount: <input type="text" name="amount"><br>
+  <input type="submit" value="Enter">
+  </form>
+</div>
+  
+  <div id = "resolve-req">
+    <form action = "/ers/resolve" method="post">
+      Request ID: <input type = "number" name="req-id"><br>
+      <fieldset>
+      <input id = "approve" type ="radio" value="approved" name="radio">
+      <label for ="approve">Approve</label>
+      <input id = "deny" type = "radio" value = "deny" name = "radio">
+      <label for ="deny">Deny</label>
+      </fieldset>
+      <input type = "submit" value = "Update">
+    </form>
+  </div>
+
+<div id="view-request">
+<h4>Pending Request</h4>
+</div>
+<div id = "view-approved">
+  <h4>Approved Request</h4>
+</div>
+<div id= "view-info"><h4>Employee information</h4></div>
+
+<script>
+  function update(){
+	
+  }
+	function out(){
+    	document.getElementById("logout").addEventListener("click", ()=>{
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+          if (xhr.readyState == 4) { 
+    		window.location.href = this.responseText;
+    		return;
+		 }
+        }
+        xhr.open('GET','/ers/logout',true);
+        xhr.send();
+      });
+	}
+	
+	function request(){
+    var x = document.getElementById("submit-form");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+	}
+	function view(){
+    var xhr = new XMLHttpRequest();
+
+     	document.getElementById("pending").addEventListener("click", ()=>{
+        var xhr = new XMLHttpRequest();
+         xhr.onreadystatechange = function(){
+           if (xhr.readyState == 4 && xhr.status==200) { 
+            var ajaxObj = JSON.parse(this.responseText);
+            document.body.onload = addDOM();
+            function addDOM(){
+              let divNode= document.createElement("div");
+              for(let obj of ajaxObj)
+              {
+            	  console.log(obj)
+                for(let key in obj)
+                {
+                  console.log(key)
+                  let element = document.createTextNode(`${key} ${obj[key]}`);
+                  divNode.appendChild(element); 
+                }
+              }
+              document.getElementById("view-request").appendChild(divNode);
+            }  
+            }
+         }
+         xhr.open('GET','/ers/allPending',true);
+         xhr.send();
+       });
+  
+  }
+  function view_approved(){
+    var xhr = new XMLHttpRequest();
+
+     	document.getElementById("approved").addEventListener("click", ()=>{
+        var xhr = new XMLHttpRequest();
+         xhr.onreadystatechange = function(){
+           if (xhr.readyState == 4 && xhr.status==200) { 
+            var ajaxObj = JSON.parse(this.responseText);
+            document.body.onload = addDOM();
+            function addDOM(){
+              let divNode= document.createElement("div");
+              for(let obj of ajaxObj)
+              {
+                for(let key in obj)
+                {
+                  console.log(key)
+                  let element = document.createTextNode(`${key} ${obj[key]}`);
+                  divNode.appendChild(element); 
+                }
+              }
+              document.getElementById("view-approved").appendChild(divNode);
+            }  
+            }
+         }
+         xhr.open('GET','/ers/allApproved',true);
+         xhr.send();
+       });
+  
+  }
+  function view_info(){
+    var xhr = new XMLHttpRequest();
+
+     	document.getElementById("info").addEventListener("click", ()=>{
+        var xhr = new XMLHttpRequest();
+         xhr.onreadystatechange = function(){
+           if (xhr.readyState == 4 && xhr.status==200) { 
+            var ajaxObj = JSON.parse(this.responseText);
+
+            document.body.onload = addDOM();
+            function addDOM(){
+              let divNode= document.createElement("div");
+              for(let obj of ajaxObj)
+                for(let key in obj)
+                {
+                  let element = document.createTextNode(`${key} ${obj[key]}`);
+                  divNode.appendChild(element); 
+                }
+              
+              document.getElementById("view-info").appendChild(divNode);
+            }  
+            }
+         }
+         xhr.open('GET','/ers/allInfo',true);
+         xhr.send();
+       });
+  
+  }
+
+
+</script>
+</body>
+</html>
