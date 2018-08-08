@@ -39,7 +39,8 @@ public class employeeDao implements ERS_DAO {
 				
 				return new employee(
 						result.getString("username"),
-						result.getString("password")
+						result.getString("password"),
+						result.getInt("admin")
 						);
 			}
 		} catch (SQLException e) {
@@ -174,6 +175,57 @@ public class employeeDao implements ERS_DAO {
 		} 
 		return new String();
 	}
+	
+	public List<request> viewAll(String status) {
+		try {
+						
+			String sql = "SELECT * FROM REQUEST WHERE STATUS=?";			
+			PreparedStatement ps = conn.prepareStatement(sql);	
+			ps.setString(1, status);
+			ResultSet rs = ps.executeQuery();			
+			List<request> accounts = new ArrayList<request>();
 
+			while(rs.next()) {
+				accounts.add( new request(
+						rs.getString("status"),
+						rs.getInt("amount"),
+						rs.getString("resolvedadmin"),
+						rs.getString("username"),
+						rs.getInt("req_id")));
+			}
+			
+			return accounts;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	public List<info> viewAllInfo() {
+		try {
+						
+			String sql = "SELECT * FROM ACCOUNT";			
+			PreparedStatement ps = conn.prepareStatement(sql);	
+			ResultSet rs = ps.executeQuery();			
+			List<info> inf = new ArrayList<info>();
+
+			while(rs.next()) {
+				inf.add( new info(
+						rs.getString("username"),
+						rs.getString("firstname"),
+						rs.getString("lastname"),
+						rs.getInt("balance"),
+						rs.getString("email")));
+			}
+			return inf;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 }

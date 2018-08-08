@@ -19,13 +19,20 @@ public class employee {
 		this.login = login;
 	}
 
+	public employee(String username, String password, int admin) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.admin= admin;
+	}
+	
 	public employee(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.admin= 0;
+		this.admin= -1;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}

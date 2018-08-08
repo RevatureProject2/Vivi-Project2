@@ -58,6 +58,48 @@ public class requestController {
 			e.printStackTrace();
 		}		
 	}
+	
+	public static void allRequestPending(HttpServletRequest req, HttpServletResponse res) throws IOException,ServletException
+	{
+		res.setContentType("application/json");
+		PrintWriter pw = res.getWriter();
+		ObjectMapper mapper = new ObjectMapper();
+		List<request> pd_req  = reimburseService.getService().viewAllRequest("pending");
+		try {
+			mapper.writeValue(pw, pd_req);
+			return;
+		} catch (JsonGenerationException e) {
+			logUtil.log.info(e.getMessage());
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			logUtil.log.info(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			logUtil.log.info(e.getMessage());
+			e.printStackTrace();
+		}		
+	}
+	public static void allRequestApproved(HttpServletRequest req, HttpServletResponse res) throws IOException,ServletException
+	{
+		res.setContentType("application/json");
+		PrintWriter pw = res.getWriter();
+		ObjectMapper mapper = new ObjectMapper();
+		List<request> pd_req  = reimburseService.getService().viewAllRequest("approved");
+		try {
+			mapper.writeValue(pw, pd_req);
+			return;
+		} catch (JsonGenerationException e) {
+			logUtil.log.info(e.getMessage());
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			logUtil.log.info(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			logUtil.log.info(e.getMessage());
+			e.printStackTrace();
+		}		
+	}
+
 	public static void viewInfo(HttpServletRequest req, HttpServletResponse res) throws IOException,ServletException {
 		
 		res.setContentType("application/json");
@@ -76,8 +118,17 @@ public class requestController {
 		info inf = new info(first, last, email);
 		
 		if(reimburseService.getService().update(inf)) {
-			res.getWriter().append("Update success");
+			res.sendRedirect("static/manhomepage.html");
 		}
 		return false;
+	}
+	public static void allInfo(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		res.setContentType("application/json");
+		PrintWriter pw = res.getWriter();
+		ObjectMapper mapper = new ObjectMapper();
+		List<info> inf = reimburseService.getService().viewAllInfo();
+		
+		mapper.writeValue(pw, inf);
+		
 	}
 	}

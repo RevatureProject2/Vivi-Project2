@@ -45,6 +45,14 @@ public class requestHelper {
 		case "login_manager":
 			loginController.login_manager(req, res);
 			break;
+		case "allPending":
+			requestController.allRequestPending(req, res);
+			break;
+		case "allApproved":
+			requestController.allRequestApproved(req, res);
+			break;
+		case "allInfo":
+			requestController.allInfo(req, res);
 		default:
 			logUtil.log.info("selection not on menu");
 			

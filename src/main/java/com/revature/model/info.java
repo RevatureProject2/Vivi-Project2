@@ -23,8 +23,6 @@ public class info {
 		this.lastname = lastname;
 		this.email = email;
 	}
-
-
 	public String getUsername() {
 		return username;
 	}

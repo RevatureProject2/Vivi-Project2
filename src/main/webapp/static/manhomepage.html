@@ -19,7 +19,7 @@
       <li class="active"><a href="#">Home</a></li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Request <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li id="submit" onclick="request()"><a href="#">Submit</a></li>
+          <!-- <li id="submit" onclick="request()"><a href="#">Submit</a></li> -->
           <li id="pending" onclick="view()"><a href="#">Pending> </a></li>
           <li id = "approved" onclick = "view_approved()"><a href="#">Approved</a></li>
         </ul>
@@ -116,7 +116,7 @@
             }  
             }
          }
-         xhr.open('GET','/ers/pending',true);
+         xhr.open('GET','/ers/allPending',true);
          xhr.send();
        });
   
@@ -134,7 +134,6 @@
               let divNode= document.createElement("div");
               for(let obj of ajaxObj)
               {
-            	  console.log(obj)
                 for(let key in obj)
                 {
                   console.log(key)
@@ -146,7 +145,7 @@
             }  
             }
          }
-         xhr.open('GET','/ers/approved',true);
+         xhr.open('GET','/ers/allApproved',true);
          xhr.send();
        });
   
@@ -158,11 +157,12 @@
         var xhr = new XMLHttpRequest();
          xhr.onreadystatechange = function(){
            if (xhr.readyState == 4 && xhr.status==200) { 
-            var obj = JSON.parse(this.responseText);
+            var ajaxObj = JSON.parse(this.responseText);
 
             document.body.onload = addDOM();
             function addDOM(){
               let divNode= document.createElement("div");
+              for(let obj of ajaxObj)
                 for(let key in obj)
                 {
                   let element = document.createTextNode(`${key} ${obj[key]}`);
@@ -173,7 +173,7 @@
             }  
             }
          }
-         xhr.open('GET','/ers/info',true);
+         xhr.open('GET','/ers/allInfo',true);
          xhr.send();
        });
   

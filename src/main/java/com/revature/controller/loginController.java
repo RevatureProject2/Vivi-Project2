@@ -43,12 +43,11 @@ public class loginController {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");	
 		
-		employee loggedEmployee = reimburseService.getService().login(
+		employee loggedEmployee = reimburseService.getService().login_manager(
 				new employee(username, password));
 	try {
 		if(loggedEmployee.getUsername().equals("")) {
 			response.sendRedirect("static/login.html");
-		
 		}
 		else {
 			session = request.getSession();
