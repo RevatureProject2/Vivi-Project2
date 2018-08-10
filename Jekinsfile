@@ -18,7 +18,7 @@ pipeline {
         stage('Deliver') {
             steps {
 	            sh 'cp target/*.war /usr/apache/apache-tomcat-8.5.30/webapps/'
-	            sh 'cp -r target/ERS /usr/apache/apache-tomcat-8.5.30/webapps/'
+	            sh 'cp -r target/ers /usr/apache/apache-tomcat-8.5.30/webapps/'
             }
         }
     }     
