@@ -118,7 +118,7 @@ public class requestController {
 		info inf = new info(first, last, email);
 		
 		if(reimburseService.getService().update(inf)) {
-			res.sendRedirect("static/manhomepage.html");
+			res.sendRedirect("static/homepage.html");
 		}
 		return false;
 	}
