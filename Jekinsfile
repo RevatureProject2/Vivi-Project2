@@ -19,8 +19,8 @@ pipeline {
             steps {
 	            sh 'cp target/*.war /usr/apache/apache-tomcat-8.5.30/webapps/'
 	            sh 'cp -r target/ers /usr/apache/apache-tomcat-8.5.30/webapps/'
-	            sh 'chmod 777 /usr/apache/apache-tomcat-8.5.30/webapps/ers.war'
-	            sh 'chmod 777 /usr/apache/apache-tomcat-8.5.30/webapps/ers/'
+	            sh 'sudo chmod 777 /usr/apache/apache-tomcat-8.5.30/webapps/ers.war'
+	            sh 'sudo chmod 777 /usr/apache/apache-tomcat-8.5.30/webapps/ers/	'
             }
         }
     }     
