@@ -17,10 +17,8 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-            	sh 'sudo su'
-	            sh 'echo $CATALINA_HOME'
-	            sh 'cp target/*.war $CATALINA_HOME/webapps/'
-	            sh 'cp -r target/ERS $CATALINA_HOME/webapps/'
+	            sh 'cp target/*.war /usr/apache/apache-tomcat-8.5.30/webapps/'
+	            sh 'cp -r target/ERS /usr/apache/apache-tomcat-8.5.30/webapps/'
             }
         }
     }     
